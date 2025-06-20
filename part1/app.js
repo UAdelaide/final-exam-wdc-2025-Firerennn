@@ -1,7 +1,7 @@
 const express = require('express');
 const path = require('path');
 
-require('./')
+require('./db')
 
 const app = express();
 
