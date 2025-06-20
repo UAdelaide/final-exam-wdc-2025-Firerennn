@@ -127,7 +127,7 @@
         fetch('/api/users/dogs/mine')
         .then(res=>res.json())
         .then(data=>{
-          myDogs
+          myDogs.value = data
 
         return {
           form,
