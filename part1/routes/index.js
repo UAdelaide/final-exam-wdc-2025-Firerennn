@@ -4,7 +4,7 @@ const router = express.Router();
 
 router.get('/walkrequests/open', async (req, res) => {
   try {
-    const rows = [      { request_id: 1, dog_name: "Fido", requested_time: "10:00am" }
+    const rows = [{ request_id: 1, dog_name: "Fido", requested_time: "10:00am" }
     ];
     res.json(rows);
   } catch (err) {
