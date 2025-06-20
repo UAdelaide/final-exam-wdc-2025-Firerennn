@@ -89,7 +89,7 @@
     try {
       const res = await fetch('/api/walks');
       walks.value = await res.json();
-    } catch (err) {
+    } catch (err) {
       error.value = 'Failed to load walk requests';
     }
   }
