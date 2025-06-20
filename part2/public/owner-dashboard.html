@@ -98,7 +98,7 @@
     try {
       const res = await fetch('/api/walks', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(form.value)
       });
       const result = await res.json();
