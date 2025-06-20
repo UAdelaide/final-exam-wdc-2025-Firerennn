@@ -56,7 +56,6 @@ router.post('/login', async (req, res) => {
 });
 
 
-
 router.get('/', async (req, res) => {
   try {
     const [rows] = await db.query(`
