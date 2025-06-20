@@ -59,15 +59,15 @@
     </div>
   </div>
   <script>
-    const { createApp } = Vue; // 从全局 Vue 对象中获取 createApp 方法
+    const { createApp } = Vue; 
     createApp({
       data() {
         return {
-          狗图片链接: ''  // 存储狗狗图片的 URL
+          狗图片链接: ''
         }
       },
       methods: {
-        // 点击按钮时加载随机狗狗图片
+
         加载狗() {
           fetch('https://dog.ceo/api/breeds/image/random')
             .then(response => response.json())
