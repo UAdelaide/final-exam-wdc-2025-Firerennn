@@ -129,7 +129,8 @@
         .then(data=>{
           myDogs.value = data;
         })
-        .catch(())
+        .catch(()=>{
+          error.value
         return {
           form,
           walks,
