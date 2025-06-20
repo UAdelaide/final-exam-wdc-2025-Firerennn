@@ -1,85 +1,82 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <title>Dog of the Day</title>
   <style>
-    /* 简洁而夸张的设计风格 */
+    /* Intentionally exaggerated design */
     body {
-      background-color: #ffea00; /* 明亮黄色背景 */
-      color: #ff00ff; /* 鲜艳的紫色文字 */
-      font-family: 'Comic Sans MS', 'Comic Sans', cursive, sans-serif;
+      background-color: #ffea00; /* bright yellow */
+      color: #ff00ff; /* vivid purple text */
+      font-family: 'Comic Sans MS', cursive, sans-serif;
       text-align: center;
       margin: 0;
       padding: 0;
       font-size: 1.5rem;
     }
     h1 {
-      font-size: 5rem; /* 特大号字体 */
+      font-size: 5rem;
       margin: 50px 0;
-      color: #00ff00; /* 鲜亮绿色 */
-      background-color: #0000ff; /* 鲜艳蓝色 */
+      color: #00ff00;
+      background-color: #0000ff;
       padding: 20px;
-      border: 5px dashed #ff0000; /* 红色虚线边框 */
+      border: 5px dashed #ff0000;
     }
     button {
-      font-size: 3rem; /* 大号按钮文字 */
-      color: #ffffff; /* 白色文字 */
-      background-color: #ff00ff; /* 明亮粉色背景 */
-      border: 5px dotted #000000; /* 黑色点线边框 */
+      font-size: 3rem;
+      color: #ffffff;
+      background-color: #ff00ff;
+      border: 5px dotted #000000;
       padding: 20px 40px;
       margin: 20px;
       cursor: pointer;
-      text-transform: uppercase; /* 全部大写 */
+      text-transform: uppercase;
     }
     button:active {
-      background-color: #00ffff; /* 点击时变为青色 */
+      background-color: #00ffff;
     }
     img {
       max-width: 90%;
       height: auto;
       margin: 20px auto;
       display: block;
-      border: 10px double #ff0000; /* 红色双线边框 */
+      border: 10px double #ff0000;
     }
   </style>
-  <!-- 引入 Vue 3 CDN -->
+  <!-- Load Vue 3 from CDN -->
   <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 </head>
 <body>
-  <!-- 应用根元素 -->
-  <div id="应用">
-    <!-- 页面标题 -->
+  <!-- Vue app root -->
+  <div id="app">
     <h1>Dog of the Day</h1>
-    <!-- 加载狗狗按钮 -->
-    <button @click="加载狗">CLICK HERE TO LOAD DOG!!</button>
-    <!-- 展示狗狗图片 -->
-    <div v-if="狗图片链接">
-      < img :src="狗图片链接" alt="随机的狗狗图片">
+    <button @click="loadDog">CLICK HERE TO LOAD DOG!!</button>
+    <div v-if="dogImage">
+      < img :src="dogImage" alt="Random dog">
     </div>
   </div>
+
   <script>
-    const { createApp } = Vue; 
+    const { createApp } = Vue;
     createApp({
       data() {
         return {
-          狗图片链接: ''
-        }
+          dogImage: ''
+        };
       },
       methods: {
-
-        加载狗() {
+        loadDog() {
           fetch('https://dog.ceo/api/breeds/image/random')
             .then(response => response.json())
             .then(data => {
-              this.狗图片链接 = data.message;
+              this.dogImage = data.message;
             })
             .catch(error => {
-              console.error('获取狗狗图片失败：', error);
+              console.error('Failed to fetch dog image:', error);
             });
         }
       }
-    }).mount('#应用');
+    }).mount('#app');
   </script>
 </body>
 </html>
