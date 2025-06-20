@@ -7,7 +7,7 @@ const app = express();
 app.use(session({
   secret: 'dogwalking-secret',
   resave: false,
-  saveUninitialized: false
+  saveUninitialized: true
 }));
 
 // Middleware
