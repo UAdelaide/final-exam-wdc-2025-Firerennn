@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const db
 
 router.get('/walkrequests/open', async (req, res) => {
   try {
