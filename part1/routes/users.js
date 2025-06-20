@@ -1,4 +1,3 @@
-// Q6: /api/dogs
 router.get('/dogs', async (req, res) => {
   try {
     const [rows] = await db.query(`
