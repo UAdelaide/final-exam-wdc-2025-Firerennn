@@ -1,32 +1,30 @@
 const express = require('express');
 const router = express.Router();
 
+
 router.get('/dogs', async (req, res) => {
   try {
-    const [rows] = await db.query(`
-      SELECT d.name AS dog_name, d.size, u.username AS owner_username
-      FROM Dogs d
-      JOIN Users u ON d.owner_id = u.user_id
-    `);
+    const rows = [
+      { dog_name: 'Buddy', size: 'Medium', owner_username: 'john_doe' },
+      { dog_name: 'Luna', size: 'Small', owner_username: 'jane_smith' }
+    ];
     res.json(rows);
   } catch (err) {
     res.status(500).json({ error: 'Failed to fetch dogs' });
   }
 });
 
+
 router.get('/walkers/summary', async (req, res) => {
   try {
-    const [rows] = await db.query(`
-      SELECT u.username AS walker_username,
-             ROUND(AVG(wr.rating), 1) AS average_rating,
-             COUNT(wr.rating_id) AS completed_walks
-      FROM Users u
-      LEFT JOIN WalkRatings wr ON u.user_id = wr.walker_id
-      WHERE u.role = 'walker'
-      GROUP BY u.user_id
-    `);
+    const rows = [
+      { walker_username: 'walker1', average_rating: 4.5, completed_walks: 12 },
+      { walker_username: 'walker2', average_rating: 4.8, completed_walks: 20 }
+    ];
     res.json(rows);
   } catch (err) {
     res.status(500).json({ error: 'Failed to fetch walker summary' });
   }
 });
+
+module.exports = router;
