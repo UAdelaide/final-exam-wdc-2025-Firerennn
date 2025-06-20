@@ -10,7 +10,6 @@ server.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
 });
 
-// 工具函数：规范化端口
 function normalizePort(val) {
   const port = parseInt(val, 10);
   if (isNaN(port)) return val;
