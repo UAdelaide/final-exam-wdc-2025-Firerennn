@@ -53,7 +53,6 @@ CREATE TABLE WalkRatings (
     FOREIGN KEY (owner_id) REFERENCES Users(user_id),
     CONSTRAINT unique_rating_per_walk UNIQUE (request_id)
 );
-- 插入 5 个用户
 INSERT INTO Users (username, email, password_hash, role) VALUES
 ('alice123', 'alice@example.com', 'hashed123', 'owner'),
 ('bobwalker', 'bob@example.com', 'hashed456', 'walker'),
@@ -61,7 +60,6 @@ INSERT INTO Users (username, email, password_hash, role) VALUES
 ('lucydog', 'lucy@example.com', 'hashed000', 'owner'),
 ('johnwalker', 'john@example.com', 'hashed999', 'walker');
 
--- 插入 5 条狗，使用子查询查找 owner_id
 INSERT INTO Dogs (name, size, owner_id) VALUES
 ('Max', 'medium', (SELECT user_id FROM Users WHERE username = 'alice123')),
 ('Bella', 'small', (SELECT user_id FROM Users WHERE username = 'carol123')),
