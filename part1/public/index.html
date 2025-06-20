@@ -2,36 +2,42 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Dog of the Day</title>
+  <title>Random Dog Viewer</title>
   <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-  <link rel="stylesheet" href="./stylesheets/style.css" />
+  <link rel="stylesheet" href="/stylesheets/style.css">
 </head>
 <body>
   <div id="app">
-    <h1>DOG OF THE DAY 🐶🔥</h1>
-    <button type="button" @click="fetchDogImage">CLICK HERE TO LOAD DOG!!</button>
-    < img v-if="dogImage" :src="dogImage" class="dog-img" alt="Random Dog" />
-    <p>Dog Name: Mr. Barkington von Woof III</p >
-    <p>Breed: Secret 🤐</p >
+    <h1>🐶 Dog of the Day 🐶</h1>
+
+    <button type="button" @click="fetchDog">Click to Load Dog!</button>
+
+    <div v-if="dogUrl">
+      < img :src="dogUrl" alt="A Random Dog" class="dog-img" />
+    </div>
+
+    <p v-if="error" style="color: red;">Failed to load dog image.</p >
   </div>
 
   <script>
     const { createApp } = Vue;
-
     createApp({
       data() {
         return {
-          dogImage: null
+          dogUrl: null,
+          error: false
         };
       },
       methods: {
-        async fetchDogImage() {
+        async fetchDog() {
           try {
+            this.error = false;
             const res = await fetch('https://dog.ceo/api/breeds/image/random');
             const data = await res.json();
-            this.dogImage = data.message;
-          } catch (error) {
-            console.error('Failed to fetch dog image:', error);
+            this.dogUrl = data.message;
+          } catch (err) {
+            this.error = true;
+            this.dogUrl = null;
           }
         }
       }
