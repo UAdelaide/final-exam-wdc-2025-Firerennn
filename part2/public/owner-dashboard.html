@@ -134,7 +134,7 @@
 </body>
 </html>
 
-<button class="btn btn-danger mt-3" onclick="logout()">Logout</button>
+<button type="button" class="btn btn-danger mt-3" onclick="logout()">Logout</button>
 <script>
   async function logout() {
     await fetch('/api/users/logout', { method: 'POST' });
