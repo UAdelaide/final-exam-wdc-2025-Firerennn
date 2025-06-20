@@ -84,10 +84,10 @@
   const walks = ref([]);
   const message = ref('');
   const error = ref('');
-  const myDogs = ref([]); // ✅ 别忘了定义这个
+  const myDogs = ref([]);
 
-  async function loadWalks() {
-    try {
+  async function loadWalks() {
+    try {
       const res = await fetch('/api/walks');
       walks.value = await res.json();
     } catch (err) {
