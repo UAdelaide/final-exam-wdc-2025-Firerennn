@@ -8,69 +8,70 @@
   <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 </head>
 <body class="bg-light">
-
   <div id="app" class="container py-5">
-  <h1 class="mb-4 text-primary">{{ message }}</h1>
-  <p class="lead">Connect with trusted walkers for your beloved dog!</p >
+    <h1 class="mb-4 text-primary">{{ message }}</h1>
+    <p class="lead">Connect with trusted walkers for your beloved dog!</p >
 
-  <form @submit.prevent="login">
-    <div class="mb-3">
-      <label for="username" class="form-label">Username</label>
-      <input type="text" id="username" v-model="username" class="form-control" required />
-    </div>
-    <div class="mb-3">
-      <label for="password" class="form-label">Password</label>
-      <input type="password" id="password" v-model="password" class="form-control" required />
-    </div>
-    <button type="submit" class="btn btn-primary">Log In</button>
-  </form>
+    <form @submit.prevent="login">
+      <div class="mb-3">
+        <label for="email" class="form-label">Email</label>
+        <input type="email" id="email" v-model="email" class="form-control" required />
+      </div>
+      <div class="mb-3">
+        <label for="password" class="form-label">Password</label>
+        <input type="password" id="password" v-model="password" class="form-control" required />
+      </div>
+      <button type="submit" class="btn btn-primary">Log In</button>
+    </form>
 
-  <p v-if="error" class="text-danger mt-3">{{ error }}</p >
-</div>
+    <p v-if="error" class="text-danger mt-3">{{ error }}</p >
+  </div>
 
   <script>
-  const { createApp } = Vue;
-  createApp({
-    data() {
-      return {
-        message: 'Welcome to the Dog Walking Service!',
-        username: '',
-        password: '',
-        error: ''
-      };
-    },
-    methods: {
-      async login() {
-        try {
-          const response = await fetch('/api/users/login', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              username: this.username,
-              password: this.password
-            })
-          });
-          const result = await response.json();
+    const { createApp } = Vue;
 
-          if (response.ok) {
-            if (result.role === 'Owner') {
-              window.location.href = 'owner-dashboard.html';
-            } else if (result.role === 'Walker') {
-              window.location.href = 'walker-dashboard.html';
+    createApp({
+      data() {
+        return {
+          message: 'Welcome to the Dog Walking Service!',
+          email: '',
+          password: '',
+          error: ''
+        };
+      },
+      methods: {
+        async login() {
+          try {
+            const response = await fetch('/api/users/login', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                email: this.email,
+                password: this.password
+              })
+            });
+
+            const result = await response.json();
+
+            if (response.ok) {
+              // 登录成功，根据用户角色跳转
+              const role = result.user.role.toLowerCase();
+              if (role === 'owner') {
+                window.location.href = 'owner-dashboard.html';
+              } else if (role === 'walker') {
+                window.location.href = 'walker-dashboard.html';
+              } else {
+                this.error = 'Unknown role';
+              }
             } else {
-              this.error = 'Unknown role.';
+              this.error = result.error || 'Login failed';
             }
-          } else {
-            this.error = result.error || 'Login failed.';
+          } catch (err) {
+            this.error = 'Login failed.';
           }
-        } catch (err) {
-          this.error = 'Server error. Please try again.';
         }
       }
-    }
-  }).mount('#app');
-</script>
-
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    }).mount('#app');
+  </script>
 </body>
 </html>
