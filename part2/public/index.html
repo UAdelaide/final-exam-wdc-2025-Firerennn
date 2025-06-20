@@ -1,59 +1,85 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <title>Dog of the Day</title>
-  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
   <style>
+    /* 简洁而夸张的设计风格 */
     body {
-      background-color: limegreen;
-      font-family: "Comic Sans MS", cursive;
-      color: yellow;
-      text-shadow: 1px 1px 1px black;
+      background-color: #ffea00; /* 明亮黄色背景 */
+      color: #ff00ff; /* 鲜艳的紫色文字 */
+      font-family: 'Comic Sans MS', 'Comic Sans', cursive, sans-serif;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+      font-size: 1.5rem;
     }
-    .dog-img {
-      width: 500px;
-      height: 500px;
-      border: 10px dotted red;
-      animation: spin 2s linear infinite;
-    }
-    @keyframes spin {
-      from { transform: rotate(0deg); }
-      to { transform: rotate(360deg); }
+    h1 {
+      font-size: 5rem; /* 特大号字体 */
+      margin: 50px 0;
+      color: #00ff00; /* 鲜亮绿色 */
+      background-color: #0000ff; /* 鲜艳蓝色 */
+      padding: 20px;
+      border: 5px dashed #ff0000; /* 红色虚线边框 */
     }
     button {
-      background-color: magenta;
-      color: black;
-      padding: 20px;
-      font-size: 18px;
+      font-size: 3rem; /* 大号按钮文字 */
+      color: #ffffff; /* 白色文字 */
+      background-color: #ff00ff; /* 明亮粉色背景 */
+      border: 5px dotted #000000; /* 黑色点线边框 */
+      padding: 20px 40px;
+      margin: 20px;
+      cursor: pointer;
+      text-transform: uppercase; /* 全部大写 */
+    }
+    button:active {
+      background-color: #00ffff; /* 点击时变为青色 */
+    }
+    img {
+      max-width: 90%;
+      height: auto;
+      margin: 20px auto;
+      display: block;
+      border: 10px double #ff0000; /* 红色双线边框 */
     }
   </style>
+  <!-- 引入 Vue 3 CDN -->
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 </head>
 <body>
-  <div id="app">
-    <h1>DOG OF THE DAY 🐶🐶🐶</h1>
-    <button type="button" @CLICK="getDog">CLICK HERE HOW TO LOAD DOG!!</button>
-    <img src="images/" :src="dogUrl" class="dog-img" alt="random dog" />
-    <p>Dog Name: Mr. Barkington von Woof III</p>
-    <p>Breed: Secret</p>
+  <!-- 应用根元素 -->
+  <div id="应用">
+    <!-- 页面标题 -->
+    <h1>Dog of the Day</h1>
+    <!-- 加载狗狗按钮 -->
+    <button @click="加载狗">CLICK HERE TO LOAD DOG!!</button>
+    <!-- 展示狗狗图片 -->
+    <div v-if="狗图片链接">
+      < img :src="狗图片链接" alt="随机的狗狗图片">
+    </div>
   </div>
-
   <script>
-    const { createApp } = Vue;
+    const { createApp } = Vue; // 从全局 Vue 对象中获取 createApp 方法
     createApp({
       data() {
         return {
-          dogUrl: ''
-        };
+          狗图片链接: ''  // 存储狗狗图片的 URL
+        }
       },
       methods: {
-        async getDog() {
-          const res = await fetch('https://dog.ceo/api/breeds/image/random');
-          const data = await res.json();
-          this.dogUrl = data.message;
+        // 点击按钮时加载随机狗狗图片
+        加载狗() {
+          fetch('https://dog.ceo/api/breeds/image/random')
+            .then(response => response.json())
+            .then(data => {
+              this.狗图片链接 = data.message;
+            })
+            .catch(error => {
+              console.error('获取狗狗图片失败：', error);
+            });
         }
       }
-    }).mount('#app');
+    }).mount('#应用');
   </script>
 </body>
 </html>
