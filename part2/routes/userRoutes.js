@@ -54,9 +54,8 @@ router.post('/login', async (req, res) => {
     res.status(500).json({ error: 'Login failed' });
   }
 });
-const express = require('express');
-const router = express.Router();
-const db = require('../db');
+
+
 
 router.get('/', async (req, res) => {
   try {
