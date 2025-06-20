@@ -12,7 +12,6 @@ router.get('/dogs', async (req, res) => {
   }
 });
 
-// Q8: /api/walkers/summary
 router.get('/walkers/summary', async (req, res) => {
   try {
     const [rows] = await db.query(`
