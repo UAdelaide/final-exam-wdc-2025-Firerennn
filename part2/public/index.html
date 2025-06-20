@@ -14,8 +14,8 @@
 
     <form @submit.prevent="login">
       <div class="mb-3">
-        <label for="email" class="form-label">Email</label>
-        <input type="email" id="email" v-model="email" class="form-control" required />
+        <label for="username" class="form-label">Username</label>
+        <input type="text" id="username" v-model="username" class="form-control" required />
       </div>
       <div class="mb-3">
         <label for="password" class="form-label">Password</label>
@@ -34,7 +34,7 @@
       data() {
         return {
           message: 'Welcome to the Dog Walking Service!',
-          email: '',
+          username: '',
           password: '',
           error: ''
         };
@@ -46,7 +46,7 @@
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({
-                email: this.email,
+                username: this.username,
                 password: this.password
               })
             });
@@ -54,7 +54,6 @@
             const result = await response.json();
 
             if (response.ok) {
-            
               const role = result.user.role.toLowerCase();
               if (role === 'owner') {
                 window.location.href = 'owner-dashboard.html';
