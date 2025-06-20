@@ -1,3 +1,6 @@
+const express = require('express');
+const router = express.Router();
+
 router.get('/walkrequests/open', async (req, res) => {
   try {
     const [rows] = await db.query(`
@@ -12,3 +15,4 @@ router.get('/walkrequests/open', async (req, res) => {
     res.status(500).json({ error: 'Failed to fetch walk requests' });
   }
 });
+module.
