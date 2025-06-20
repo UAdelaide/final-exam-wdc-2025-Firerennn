@@ -4,7 +4,11 @@ const session = require('express-session');
 require('dotenv').config();
 
 const app = express();
-
+app.use(session({
+  secret: 'dogwalking-secret',
+  resave: false,
+  saveUninitialized: false
+}));
 
 // Middleware
 app.use(express.json());
