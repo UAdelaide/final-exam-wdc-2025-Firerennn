@@ -128,7 +128,8 @@
         .then(res=>res.json())
         .then(data=>{
           myDogs.value = data;
-        });
+        })
+        .catch(())
         return {
           form,
           walks,
