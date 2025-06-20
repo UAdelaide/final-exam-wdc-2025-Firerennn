@@ -122,7 +122,7 @@
         onMounted(() => {
           loadWalks();
         });
-        fetch('/api')
+        fetch('/api/users/dogs/mine')
 
         return {
           form,
@@ -130,6 +130,7 @@
           message,
           error,
           submitWalkRequest
+          m
         };
       }
     }).mount('#app');
