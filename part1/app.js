@@ -12,5 +12,4 @@ const userRoutes = require('./routes/users');
 app.use('/api', indexRoutes);
 app.use('/api/users', userRoutes);
 
-// Export the app for external use (e.g., bin/www)
 module.exports = app;
