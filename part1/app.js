@@ -1,8 +1,6 @@
 const express = require('express');
 const path = require('path');
 
-require('./models/db');
-
 const app = express();
 
 app.use(express.json());
