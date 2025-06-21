@@ -44,22 +44,6 @@
       </div>
     </div>
 
-   <h2 class="mb-3">Dog List</h2>
-<div class="row" v-if="dogs.length > 0">
-  <div class="col-md-4 mb-4" v-for="dog in dogs" :key="dog.dog_id">
-    <div class="card">
-      <img :src="dog.image" class="card-img-top" alt="Dog Image" />
-      <div class="card-body">
-        <h5 class="card-title">{{ dog.name }}</h5>
-        <p class="card-text">
-          <strong>Size:</strong> {{ dog.size }}<br>
-          <strong>Owner:</strong> {{ dog.owner_name }}
-        </p >
-      </div>
-    </div>
-  </div>
-</div>
-<p v-else>Loading dogs...</p >
 
     <!-- Success or error messages -->
     <div v-if="message" class="alert alert-info">{{ message }}</div>
