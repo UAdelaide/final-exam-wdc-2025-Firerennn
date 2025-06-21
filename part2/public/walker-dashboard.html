@@ -44,7 +44,6 @@
       const message = ref('');
       const error = ref('');
 
-      // ✅ 从服务器获取当前登录的 walker 用户信息
       async function getCurrentUser() {
         try {
           const res = await fetch('/api/users/me');
@@ -56,7 +55,6 @@
         }
       }
 
-      // ✅ 加载所有 Walk 请求
       async function loadWalkRequests() {
         try {
           const res = await fetch('/api/walks');
@@ -68,10 +66,9 @@
         }
       }
 
-      // ✅ 申请一个 walk，动态获取当前用户 ID
       async function applyToWalk(request_id) {
         try {
-          const user = await getCurrentUser(); // 获取当前登录者
+          const user = await getCurrentUser();
           const res = await fetch(`/api/walks/apply/${request_id}`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
