@@ -59,18 +59,4 @@ router.post('/:id/apply', async (req, res) => {
   }
 });
 
-router.post('/', async (req, res) => {
-  const { dog_id, requested_time, duration_minutes, location } = req.body;
-  try {
-    await db.query(`
-      INSERT INTO walks (dog_id, requested_time, duration_minutes, location, status)
-      VALUES (?, ?, ?, ?, 'pending')
-    `, [dog_id, requested_time, duration_minutes, location]);
-
-    res.json({ message: 'Walk request created successfully' });
-  } catch (err) {
-    res.status(500).json({ error: 'Database error when creating walk request' });
-  }
-});
-
 module.exports = router;
