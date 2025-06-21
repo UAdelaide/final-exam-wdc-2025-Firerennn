@@ -65,7 +65,21 @@ router.post('/logout', (req, res) => {
     res.json({ message: 'Logged out' });
   });
 });
+// 获取当前用户拥有的狗狗列表（仅限 owner）
+router.get('/dogs/mine', async (req, res) => {
+  if (!req.session.user || req.session.user.role !== 'owner') {
+    return res.status(401).json({ error: 'Unauthorized' });
+  }
 
+  const ownerId = req.session.user.user_id;
+
+  try {
+    const [rows] = await db.query('SELECT * FROM Dogs WHERE owner_id = ?', [ownerId]);
+    res.json(rows);
+  } catch (err) {
+    res.status(500).json({ error: 'Database error' });
+  }
+});
 
 
   db.query('SELECT dog_id, name FROM Dogs WHERE owner_id = ?', [ownerId])
