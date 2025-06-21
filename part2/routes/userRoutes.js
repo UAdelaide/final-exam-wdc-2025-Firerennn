@@ -63,7 +63,17 @@ router.post('/logout', (req, res) => {
     res.json({ message: 'Logged out' });
   });
 });
+ router.get('/mydogs', (req, res) => {
+  const ownerId = req.session.user_id;
 
+  db.query('SELECT dog_id, name FROM Dogs WHERE owner_id = ?', [ownerId])
+    .then(([rows]) => {
+      res.json(rows);
+    })
+    .catch(err => {
+      res.status(500).json({ error: 'Failed to fetch dogs' });
+    });
+});
 
   db.query('SELECT dog_id, name FROM Dogs WHERE owner_id = ?', [ownerId])
     .then(([rows]) => {
