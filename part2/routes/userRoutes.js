@@ -12,17 +12,6 @@ router.get('/', async (req, res) => {
   }
 });
 
- router.get('/mydogs', (req, res) => {
-  const ownerId = req.session.user_id;
-
-  db.query('SELECT dog_id, name FROM Dogs WHERE owner_id = ?', [ownerId])
-    .then(([rows]) => {
-      res.json(rows);
-    })
-    .catch(err => {
-      res.status(500).json({ error: 'Failed to fetch dogs' });
-    });
-});
 // POST a new user (simple signup)
 router.post('/register', async (req, res) => {
   const { username, email, password, role } = req.body;
