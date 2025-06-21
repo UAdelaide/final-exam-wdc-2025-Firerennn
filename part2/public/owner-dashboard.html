@@ -125,8 +125,8 @@
     loadWalks();
 
     fetch('/api/users/dogs/mine')
-      .then(res => res.json())
-      .then(data => {
+      .then(res => res.json())
+      .then(data => {
         myDogs.value = data;
       })
       .catch(() => {
