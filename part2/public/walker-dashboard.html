@@ -36,56 +36,66 @@
   </div>
 
   <script>
-    const { createApp, ref, onMounted } = Vue;
+  const { createApp, ref, onMounted } = Vue;
 
-    createApp({
-      setup() {
-        const walks = ref([]);
-        const message = ref('');
-        const error = ref('');
+  createApp({
+    setup() {
+      const walks = ref([]);
+      const message = ref('');
+      const error = ref('');
 
-        async function loadWalkRequests() {
-          try {
-            const res = await fetch('/api/walks');
-            if (!res.ok) throw new Error('Failed to load walk requests');
-            walks.value = await res.json();
-          } catch (err) {
-            error.value = err.message;
-          }
+      // ✅ 从服务器获取当前登录的 walker 用户信息
+      async function getCurrentUser() {
+        try {
+          const res = await fetch('/api/users/me');
+          if (!res.ok) throw new Error('Failed to fetch user info');
+          return await res.json();
+        } catch (err) {
+          error.value = 'Could not get current user';
+          console.error(err);
         }
-
-        async function applyToWalk(requestId) {
-          try {
-            const res = await fetch(`/api/walks/${requestId}/apply`, {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ walker_id: user })
-            });
-            const result = await res.json();
-
-            if (!res.ok) throw new Error(result.error || 'Application failed');
-            message.value = result.message;
-            error.value = '';
-            await loadWalkRequests();
-          } catch (err) {
-            error.value = err.message;
-            message.value = '';
-          }
-        }
-
-        onMounted(() => {
-          loadWalkRequests();
-        });
-
-        return {
-          walks,
-          message,
-          error,
-          applyToWalk
-        };
       }
-    }).mount('#app');
-  </script>
+
+      // ✅ 加载所有 Walk 请求
+      async function loadWalkRequests() {
+        try {
+          const res = await fetch('/api/walks');
+          if (!res.ok) throw new Error('Failed to load walk requests');
+          walks.value = await res.json();
+        } catch (err) {
+          error.value = 'Error loading walks.';
+          console.error(err);
+        }
+      }
+
+      // ✅ 申请一个 walk，动态获取当前用户 ID
+      async function applyToWalk(request_id) {
+        try {
+          const user = await getCurrentUser(); // 获取当前登录者
+          const res = await fetch(`/api/walks/apply/${request_id}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ walker_id: user.user_id })
+          });
+
+          if (!res.ok) throw new Error('Failed to apply for walk');
+          message.value = 'Successfully applied for the walk!';
+          error.value = '';
+          await loadWalkRequests();
+        } catch (err) {
+          error.value = 'Error applying to walk.';
+          console.error(err);
+        }
+      }
+
+      onMounted(() => {
+        loadWalkRequests();
+      });
+
+      return { walks, message, error, applyToWalk };
+    }
+  }).mount('#app');
+</script>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
