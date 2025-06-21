@@ -122,10 +122,9 @@
   }
 
     onMounted(() => {
-    loadWalks();
+    loadWalks();
 
-    // ✅ 狗狗列表请求必须写在这里
-    fetch('/api/users/dogs/mine')
+    fetch('/api/users/dogs/mine')
       .then(res => res.json())
       .then(data => {
         myDogs.value = data;
