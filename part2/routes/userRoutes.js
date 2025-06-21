@@ -64,12 +64,7 @@ router.post('/logout', (req, res) => {
   });
 });
 
-router.get('/dogs/mine', (req, res) => {
-  if (!req.session.user || req.session.user.role !== 'owner') {
-    return res.status(401).json({ error: 'Unauthorized' });
-  }
 
-  const ownerId = req.session.user.user_id;
 
   db.query('SELECT dog_id, name FROM Dogs WHERE owner_id = ?', [ownerId])
     .then(([rows]) => {
