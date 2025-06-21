@@ -72,6 +72,5 @@ router.post('/logout', (req, res) => {
     .catch(err => {
       res.status(500).json({ error: 'Failed to fetch dogs' });
     });
-});
 
 module.exports = router;
