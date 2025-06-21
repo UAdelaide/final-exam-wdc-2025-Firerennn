@@ -65,7 +65,6 @@ router.post('/logout', (req, res) => {
 });
 
 
-
   db.query('SELECT dog_id, name FROM Dogs WHERE owner_id = ?', [ownerId])
     .then(([rows]) => {
       res.json(rows);
