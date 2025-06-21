@@ -86,29 +86,7 @@
   const message = ref('');
   const error = ref('');
   const myDogs = ref([]);
-  const dogs = ref([]);
-
-  async function loadDogs() {
-  try {
-    const res = await fetch('/api/dogs');
-    const data = await res.json();
-
-    for (const dog of data) {
-      const imgRes = await fetch('https://dog.ceo/api/breeds/image/random');
-      const imgData = await imgRes.json();
-      dog.image = imgData.message;
-    }
-
-    dogs.value = data;
-  } catch (err) {
-    console.error('Error loading dogs:', err);
-  }
-}
-
-onMounted(() => {
-  loadDogs();
-});
-
+  
   async function loadWalks() {
     try {
       const res = await fetch('/api/walks');
